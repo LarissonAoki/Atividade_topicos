@@ -1,3 +1,12 @@
+/*
+ * Autores:
+ * 	Ana Cristina Lima	
+ * 	André Luiz Rodrigues
+ * 	Larissa Soares Aoki
+ * 	Lucy Brandão
+ * 	Natalia Gonçalves
+ */
+
 package com.exemplo.demo;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -8,14 +17,23 @@ public class AtividadeApplication {
 		ClassPathXmlApplicationContext context = 
 				new ClassPathXmlApplicationContext(	"applicationContext.xml");
 		
-		Porco p1 = (Porco) context.getBean("porco1");
-		Porco p2 = (Porco) context.getBean("porco2");
-		Porco p3 = (Porco) context.getBean("porco3");
+		Porco p1 = (Porco) context.getBean("porco");
+		Milho m1 = (Milho) context.getBean("milho");
+		Fazendeiro f1 = (Fazendeiro) context.getBean("fazendeiro");
 		
-		System.out.println("valor de venda do porco1: " + p1.vender());
-		System.out.println("valor de venda do porco2: " + p2.vender());
-		System.out.println("valor de venda do porco3: " + p3.vender());
- 
+		int quant = f1.contar();
+		f1.setSaldo(quant*f1.getRebanho().valor());
+		m1.getNutriente();
+		
+		System.out.println(" \n----- Fazenda " + f1.getNome()+ " ----- ");
+		System.out.println(" Tipo de porco: " + f1.getRebanho().getRaça()
+								+" (R$ "+p1.valor()+")");
+		System.out.println(" Tipo de milho: " 
+								+ f1.getEstoque_alimento().getTipo()
+								+" ("+m1.getValor_nutriente()+" kcal)");
+		System.out.println(" Total do rebanho: " + quant);
+		System.out.println(" Saldo da Total: " + f1.getSaldo());
+		
 	}
 
 }

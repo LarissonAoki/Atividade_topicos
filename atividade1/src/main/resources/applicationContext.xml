@@ -4,25 +4,24 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
         
-        <bean id="porco1"
+        <bean id="porco"
         		class="com.exemplo.demo.Porco">
         		<property name="peso" value="800"></property>
         		<property name="idade" value="12"></property>
         		<property name="raça" value="large white"></property>
+        		<property name="alimento" ref="milho"></property>
         </bean>
         
-        <bean id="porco2"
-        		class="com.exemplo.demo.Porco">
-        		<property name="peso" value="1400"></property>
-        		<property name="idade" value="15"></property>
-        		<property name="raça" value="large black"></property>
+        <bean id="milho"
+        		class="com.exemplo.demo.Milho">
+        		<property name="tipo" value="mushroom"></property>
+        		<property name="qualidade" value="seco"></property>
         </bean>
         
-        <bean id="porco3"
-        		class="com.exemplo.demo.Porco">
-        		<property name="peso" value="1500"></property>
-        		<property name="idade" value="10"></property>
-        		<property name="raça" value="large white"></property>
+        <bean id="fazendeiro"
+        		class="com.exemplo.demo.Fazendeiro">
+        		<property name="nome" value="João"></property>
+        		<property name="rebanho" ref="porco"></property>
+        		<property name="estoque_alimento" ref="milho"></property>
         </bean>
-
 </beans>

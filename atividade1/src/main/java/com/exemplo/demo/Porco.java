@@ -40,7 +40,7 @@ public class Porco implements Animal{
 
 
 	@Override
-	public float vender() {
+	public float valor() {
 		float valor = 0f;
 		if(this.peso >= 1500) {
 			valor += 300;

@@ -1,5 +1,7 @@
 package com.exemplo.demo;
 
+import java.util.Random;
+
 public class Fazendeiro implements Pessoa{
 	
 	private String nome;
@@ -31,15 +33,22 @@ public class Fazendeiro implements Pessoa{
 	public void setSaldo(float saldo) {
 		this.saldo = saldo;
 	}
+	
 	@Override
-	public float comprar() {
-		// TODO Auto-generated method stub
-		return 0;
+	public void comprar(int quant, Porco porco) {
+		System.out.println("Saldo antes da compra: " + this.saldo);
+		float valor_compra = quant*porco.valor();
+		System.out.println("valor da compra: " + valor_compra);
+		this.saldo -= valor_compra;	
+		System.out.println("Novo valor do saldo: " + this.saldo);
 	}
+	
 	@Override
 	public int contar() {
-		// TODO Auto-generated method stub
-		return 0;
+		Random r = new Random();
+		int quant = r.nextInt(71);
+		
+		return quant+30;
 	}
 	
 	
