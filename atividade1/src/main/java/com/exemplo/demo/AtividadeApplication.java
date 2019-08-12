@@ -5,6 +5,7 @@
  * 	Larissa Soares Aoki
  * 	Lucy Brandão
  * 	Natalia Gonçalves
+ * 	Natalia Marinho
  */
 
 package com.exemplo.demo;
