@@ -27,16 +27,21 @@ public class VendaServiceImpl implements VendaService{
 
 	@Override
 	public Vendas incluirVenda(int quant_carro, String vendedor, Date data, Carros idCarro) {
-		Vendas v = new Vendas();
-		v.setCarro(idCarro);
-		v.setQuant_carro(quant_carro);
-		v.setValor_total(quant_carro*idCarro.getPreco());
-		v.setVendedor(vendedor);
-		v.setData(data);
+		if((Integer) quant_carro != null && !vendedor.equals(null)&& data != null) {
+			Vendas v = new Vendas();
+			v.setCarro(idCarro);
+			v.setQuant_carro(quant_carro);
+			v.setValor_total(quant_carro*idCarro.getPreco());
+			v.setVendedor(vendedor);
+			v.setData(data);
+			
+			vendaRepo.save(v);
+			
+			return v;
+		}else {
+			return null;
+		}
 		
-		vendaRepo.save(v);
-		
-		return v;
 	}
 
 	@Override

@@ -25,7 +25,7 @@ public class Vendas {
 	@Id 
     @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "VENDA_ID")
-	@JsonView({View.CadastroCarro.class, View.VendaVendedor.class})
+	@JsonView({View.CadastroCarro.class, View.VendaVendedor.class, View.CadastroVend.class})
 	private Long id;
 	
 	@Column(name = "VENDA_QUAN")

@@ -21,11 +21,11 @@ public class Carros {
 	@Id 
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "CARRO_ID")
-	@JsonView({View.CadastroCarro.class, View.CarroModelo.class, View.VendaVendedor.class})
+	@JsonView({View.CadastroCarro.class, View.CarroModelo.class, View.VendaVendedor.class, View.CadastroVend.class})
 	private Long id;
 	
 	@Column(name = "CARRO_MODELO")
-	@JsonView({View.BuscaCarro.class, View.CarroModelo.class, View.VendaVendedor.class})
+	@JsonView({View.BuscaCarro.class, View.CarroModelo.class, View.VendaVendedor.class, View.CadastroVend.class})
 	private String modelo;
 	
 	@Column(name = "CARRO_ANO")
@@ -33,7 +33,7 @@ public class Carros {
 	private int ano;
 		
 	@Column(name = "CARRO_PRECO")
-	@JsonView({View.BuscaCarro.class, View.CarroModelo.class})
+	@JsonView({View.BuscaCarro.class, View.CarroModelo.class, View.CadastroVend.class})
 	private float preco;
 	
 	@Column(name = "CARRO_COR")

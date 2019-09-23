@@ -21,14 +21,18 @@ public class CarroServiceImpl implements CarroService{
 	@Override
 	public Carros incluirCarro(String modelo, int ano, float preco, String cor) {
 		
-		Carros c = new Carros();
-		c.setModelo(modelo);
-		c.setAno(ano);
-		c.setPreco(preco);
-		c.setCor(cor);
-		repo_carro.save(c);
-		
-		return c;
+		if(modelo.equals(null)&& (Integer)ano == null && (Float) preco == null && cor.equals(null)) {
+			return null;
+		}else {
+			Carros c = new Carros();
+			c.setModelo(modelo);
+			c.setAno(ano);
+			c.setPreco(preco);
+			c.setCor(cor);
+			repo_carro.save(c);
+			
+			return c;
+		}
 	}
 
 	@Override
