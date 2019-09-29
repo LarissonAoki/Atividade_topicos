@@ -36,18 +36,21 @@ public class VendaController {
 	@RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
 	@JsonView(View.BuscaVenda.class)
 	public ResponseEntity<Vendas> pesquisar(@PathVariable("id") Long id) {
-		Vendas venda = service.busca(id);
-		if(venda == null) {
+		
+		try {
+			Vendas venda = service.busca(id);
+			return new ResponseEntity<Vendas>(venda, HttpStatus.OK);
+		}catch (NullPointerException  e ) {
 			return new ResponseEntity<Vendas>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<Vendas>(venda, HttpStatus.OK);
+		
 	}
 	
 	@RequestMapping(value = "/vendedor/{vendedor}", method = RequestMethod.GET)
 	@JsonView(View.VendaVendedor.class)
 	public ResponseEntity<Collection<Vendas>> getModelos(@PathVariable("vendedor") String vendedor){
 		List<Vendas> listaVendas = service.vendas(vendedor);
-		if (listaVendas == null) {
+		if (listaVendas.size() == 0) {
 			return new ResponseEntity<Collection<Vendas>>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<Collection<Vendas>>(listaVendas, HttpStatus.OK);
@@ -57,12 +60,16 @@ public class VendaController {
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@JsonView(View.CadastroVend.class)
 	public ResponseEntity<Vendas> save(@RequestBody Vendas venda, HttpServletRequest request, HttpServletResponse response) {
-		Carros carro = serviceCarro.buscarID(venda.getCarro().getId());
-		Vendas v = service.incluirVenda(venda.getQuant_carro(), venda.getVendedor(), venda.getData(),carro);
-		if(carro != null && v!= null) {
+		
+		try {
+			Carros carro = serviceCarro.buscarID(venda.getCarro().getId());
+			Vendas v = service.incluirVenda(venda.getQuant_carro(), venda.getVendedor(), venda.getData(),carro);
 			response.addHeader("Location", request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/venda/get/" + v.getId());
 			return new ResponseEntity<Vendas>(v, HttpStatus.CREATED);
-		}else {
+		
+		}catch (NullPointerException  e ) {
+			return new ResponseEntity<Vendas>(HttpStatus.NOT_ACCEPTABLE);
+		}catch(IllegalArgumentException i) {
 			return new ResponseEntity<Vendas>(HttpStatus.NOT_ACCEPTABLE);
 		}
 		

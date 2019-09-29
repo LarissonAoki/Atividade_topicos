@@ -39,18 +39,21 @@ public class CarroController {
 	@RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
 	@JsonView(View.BuscaCarro.class)
 	public ResponseEntity<Carros> esquisar(@PathVariable("id") Long id) {
-		Carros carro = carroService.buscarID(id);
-		if(carro == null) {
+		
+		try {
+			Carros carro = carroService.buscarID(id);
+			return new ResponseEntity<Carros>(HttpStatus.OK);
+		}catch(NullPointerException e) {
 			return new ResponseEntity<Carros>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<Carros>(carro, HttpStatus.OK);
+		
 	}
 	
 	@RequestMapping(value = "/modelo/{modelo}", method = RequestMethod.GET)
 	@JsonView(View.CarroModelo.class)
 	public ResponseEntity<Collection<Carros>> getModelos(@PathVariable("modelo") String modelos){
 		List<Carros> listaModelos = carroService.estoque_modelo(modelos);
-		if (listaModelos == null) {
+		if (listaModelos.size() == 0) {
 			return new ResponseEntity<Collection<Carros>>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<Collection<Carros>>(listaModelos, HttpStatus.OK);
@@ -61,11 +64,12 @@ public class CarroController {
 	@JsonView(View.CadastroCarro.class)
 	public ResponseEntity<Carros> save(@RequestBody Carros carro, HttpServletRequest request, HttpServletResponse response) {
 		
-		Carros c = carroService.incluirCarro(carro.getModelo(), carro.getAno(), carro.getPreco(), carro.getCor());
-		if (c != null) {
+		try {
+			Carros c = carroService.incluirCarro(carro.getModelo(), carro.getAno(), carro.getPreco(), carro.getCor());
+			
 			response.addHeader("Location", request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/venda/get/" + carro.getId());
 			return new ResponseEntity<Carros>(c, HttpStatus.CREATED);
-		}else {
+		}catch(NullPointerException e) {
 			return new ResponseEntity<Carros>(HttpStatus.NOT_ACCEPTABLE);
 
 		}
